@@ -72,3 +72,12 @@ fortuna = dadi_disponibili[0]
 dadi_disponibili.remove(fortuna)
 
 print("Ho capito bene? Le tue statistiche sono: ", forza, agilita, resistenza, divinazione, ingegno, fortuna, "corretto?")
+
+print("Confermi? Digita 'y' se vuoi proseguire, altrimenti 'n' se vuoi ripartire con l'assegnazione dei ricordi")
+conferma = input()
+
+if conferma == "y":
+    print("I tuoi ricordi sono stabili, l'avventura ha inizio...")
+else:
+    print("I tuoi ricordi vacillano, ricominciamo...")
+
