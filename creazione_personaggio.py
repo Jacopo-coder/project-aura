@@ -25,6 +25,14 @@ def chiedi_statistica(nome_statistica, dadi_disponibili):
     return int(scelta)
 
 def crea_personaggio():
+    
+    print("==================================================")
+    print("                  PROJECT-AURA                    ")
+    print("       Un gioco di ruolo testuale ideato da       ")
+    print("             JACOPO 'TAKESHI' BITOSSI             ")
+    print("                Versione 1.0 [2026]               ")
+    print("==================================================\n")
+    
     print("Svegliati... Come ti chiami, viandante?")
     nome_giocatore = input()
 
@@ -59,7 +67,7 @@ def crea_personaggio():
 
     resistenza = chiedi_statistica("Resistenza", dadi_disponibili)
     if resistenza == "RESET":
-        print("\n--- I tuoi ricordi sono confusi... Ricominciamo...\n")
+        print("\nI tuoi ricordi sono confusi... Ricominciamo...\n")
         return crea_personaggio()
     dadi_disponibili.remove(resistenza)
 
