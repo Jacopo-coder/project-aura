@@ -1,69 +1,101 @@
 import random
 
+def calcola_statistica():
+    lanci = []
+    for lancio in range(4):
+        numero_estratto = random.randint(1, 8)
+        lanci.append(numero_estratto)
+    lanci.sort()
+    lanci.pop(0)
+    return sum(lanci)
+
+def chiedi_statistica(nome_statistica, dadi_disponibili):
+    print(f"\n{nome_statistica}: ")
+    scelta = input()
+    
+    if scelta.lower() == "ricomincia":
+        return "RESET"
+        
+    while not scelta.isdigit() or int(scelta) not in dadi_disponibili:
+        if scelta.lower() == "ricomincia":
+            return "RESET"
+        print("Numero non valido o inserimento sbagliato!")
+        scelta = input(f"Riprova {nome_statistica} o scrivi 'ricomincia' per ripartire da capo: ")
+        
+    return int(scelta)
+
 def crea_personaggio():
-    print("Benvenuto avventuriero!")
-    nome_giocatore = input("Quale è il tuo nome?")
-    print("Capisco, quindi il tuo nome è", nome_giocatore,", ho capito bene?")
-    print("Ti sei appena svegliato da un lungo sonno, ricordi le tue caratteristiche?")
+    print("Svegliati... Come ti chiami, viandante?")
+    nome_giocatore = input()
 
-    stat_1 = random.randint(1, 25)
-    stat_2 = random.randint(1, 25)
-    stat_3 = random.randint(1, 25)
-    stat_4 = random.randint(1, 25)
-    stat_5 = random.randint(1, 25)
-    stat_6 = random.randint(1, 25)
+    stat_1 = calcola_statistica()
+    stat_2 = calcola_statistica()
+    stat_3 = calcola_statistica()
+    stat_4 = calcola_statistica()
+    stat_5 = calcola_statistica()
+    stat_6 = calcola_statistica()
 
-    print("Ecco i ricordi delle tue caratteristiche: ",stat_1, stat_2, stat_3, stat_4, stat_5, stat_6, "assegna un valore ad ognuna...")
+    print(f"\n{nome_giocatore}, ecco i ricordi delle tue caratteristiche: ")
+    print(stat_1, stat_2, stat_3, stat_4, stat_5, stat_6)
+    print("Assegna un valore ad ognuna...")
 
     dadi_disponibili = [stat_1, stat_2, stat_3, stat_4, stat_5, stat_6]
-
-    print("Forza: ")
-    forza = int(input())
-    while forza not in dadi_disponibili:
-        print("Numero non valido o già usato!")
-        forza = int(input("Riprova: "))
+    
+    forza = chiedi_statistica("Forza", dadi_disponibili)
+    if forza == "RESET":
+        print("\nI tuoi ricordi sono confusi... Ricominciamo...\n")
+        return crea_personaggio()
     dadi_disponibili.remove(forza)
 
-    print("Ti sono rimasti questi ricordi da assegnare: ",dadi_disponibili)
+    print("Ti sono rimasti questi ricordi da assegnare: ", dadi_disponibili)
 
-    print("Agilita: ")
-    agilita = int(input())
-    while agilita not in dadi_disponibili:
-        print("Numero non valido o già usato!")
-        agilita = int(input("Riprova: "))
+    agilita = chiedi_statistica("Agilità", dadi_disponibili)
+    if agilita == "RESET":
+        print("\nI tuoi ricordi sono confusi... Ricominciamo...\n")
+        return crea_personaggio()
     dadi_disponibili.remove(agilita)
 
-    print("Ti sono rimasti questi ricordi da assegnare: ",dadi_disponibili)
+    print("Ti sono rimasti questi ricordi da assegnare: ", dadi_disponibili)
 
-    print("Resistenza: ")
-    resistenza = int(input())
-    while resistenza not in dadi_disponibili:
-        print("Numero non valido o già usato!")
-        resistenza = int(input("Riprova: "))
+    resistenza = chiedi_statistica("Resistenza", dadi_disponibili)
+    if resistenza == "RESET":
+        print("\n--- I tuoi ricordi sono confusi... Ricominciamo...\n")
+        return crea_personaggio()
     dadi_disponibili.remove(resistenza)
 
-    print("Ti sono rimasti questi ricordi da assegnare: ",dadi_disponibili)
+    print("Ti sono rimasti questi ricordi da assegnare: ", dadi_disponibili)
 
-    print("Divinazione: ")
-    divinazione = int(input())
-    while divinazione not in dadi_disponibili:
-        print("Numero non valido o già usato!")
-        divinazione = int(input("Riprova: "))
+    divinazione = chiedi_statistica("Divinazione", dadi_disponibili)
+    if divinazione == "RESET":
+        print("\nI tuoi ricordi sono confusi... Ricominciamo...\n")
+        return crea_personaggio()
     dadi_disponibili.remove(divinazione)
 
-    print("Ti sono rimasti questi ricordi da assegnare: ",dadi_disponibili)
+    print("Ti sono rimasti questi ricordi da assegnare: ", dadi_disponibili)
 
-    print("Ingegno: ")
-    ingegno = int(input())
-    while ingegno not in dadi_disponibili:
-        print("Numero non valido o già usato!")
-        ingegno = int(input("Riprova: "))
+    ingegno = chiedi_statistica("Ingegno", dadi_disponibili)
+    if ingegno == "RESET":
+        print("\nI tuoi ricordi sono confusi... Ricominciamo...\n")
+        return crea_personaggio()
     dadi_disponibili.remove(ingegno)
 
-    print("Ti è rimasto un solo ricordo...")
-
-    print("L'ultimo frammento dei tuoi ricordi si assesta...")
+    print("L'ultimo frammento dei tuoi ricordi si assesta... Ecco la tua fortuna...")
     fortuna = dadi_disponibili[0]
     dadi_disponibili.remove(fortuna)
 
-    return nome_giocatore, forza, agilita, resistenza, divinazione, ingegno, fortuna
+    personaggio = {
+        "nome": nome_giocatore,
+        "forza": forza,
+        "agilita": agilita,
+        "resistenza": resistenza,
+        "divinazione": divinazione,
+        "ingegno": ingegno,
+        "fortuna": fortuna
+    }
+
+    return personaggio
+
+mio_personaggio = crea_personaggio()
+
+print("\nPERSONAGGIO SALVATO")
+print(mio_personaggio)
